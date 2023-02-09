@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GitHubRepos</string>
+    <string name="Репозитории">Выберите общее количество отображаемых репозиториев на экране (только числа)</string>
+
+    <string-array name="sort_list">
+        <item>По умолчанию</item>
+        <item>По названию</item>
+    </string-array>
+
+</resources>

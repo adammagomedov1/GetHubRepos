@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/featured_authors_menu"
+        android:background="?selectableItemBackground"
+        android:title="Избранные авторы"/>
+
+    <item
+        android:id="@+id/settings_menu"
+        android:title="Настройки"
+        android:background="?selectableItemBackground"/>
+
+
+    <item
+        android:id="@+id/about_application_menu"
+        android:background="?selectableItemBackground"
+        android:title="О приложении"/>
+</menu>
