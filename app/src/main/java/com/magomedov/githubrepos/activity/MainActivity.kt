@@ -14,6 +14,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navigateFragment()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("MainActivity","onDestroy")
+    }
+
     private fun navigateFragment() {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_main_container, RepositoryListFragment())
