@@ -10,13 +10,13 @@ import com.magomedov.githubrepos.fragment.RepositoryListFragment
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("MainActivity", "onCreate")
+        Log.d("MainActivity", "был выызван onCreate")
         navigateFragment()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("MainActivity","onDestroy")
+        Log.d("MainActivity","был выызван onDestroy")
     }
 
     private fun navigateFragment() {
