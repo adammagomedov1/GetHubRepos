@@ -18,7 +18,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("MainActivity","был вызван onDestroy")
+        Log.d("MainActivity", "был вызван onDestroy")
+
+    }
+
+    // Вызывается когда экран становится видимым
+    override fun onStart() {
+        super.onStart()
+        Log.d("MainActivity","был вызван onStart")
 
     }
 
