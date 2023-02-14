@@ -29,6 +29,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        Log.d("MainActivity","был вызван onStop")
+
+    }
+
     private fun navigateFragment() {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_main_container, RepositoryListFragment())
