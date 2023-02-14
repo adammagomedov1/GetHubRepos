@@ -11,14 +11,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("MainActivity", "был выызван onCreate")
+        Log.d("MainActivity", "был вызван onCreate")
         navigateFragment()
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("MainActivity","был выызван onDestroy")
+        Log.d("MainActivity","был вызван onDestroy")
 
     }
 
