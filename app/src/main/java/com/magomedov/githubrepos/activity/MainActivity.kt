@@ -8,7 +8,7 @@ import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.fragment.RepositoryListFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
-
+    // Вызывается когда создаётся Activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("MainActivity", "был вызван onCreate")
@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     }
 
+    // Вызывается при унечтожении экран
     override fun onDestroy() {
         super.onDestroy()
         Log.d("MainActivity", "был вызван onDestroy")
