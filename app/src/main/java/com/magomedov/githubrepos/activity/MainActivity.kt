@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun navigateFragment() {
+        //Выполняется переход на экран списка репозиториев
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_main_container, RepositoryListFragment())
         transaction.commit()
