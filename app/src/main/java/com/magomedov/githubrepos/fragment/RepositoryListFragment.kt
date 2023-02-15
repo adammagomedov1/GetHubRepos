@@ -22,6 +22,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+// Экран отоброжаюший репозиториев
 class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
 
 
