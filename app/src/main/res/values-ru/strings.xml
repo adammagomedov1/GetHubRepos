@@ -8,6 +8,9 @@
     <string name="featured_authors">Избранные авторы</string>
     <string name="about_the_application">О приложении</string>
 
+    <string name="share">Поделится</string>
+    <string name="mistakes">Ошибки</string>
+
     <string-array name="sort_list">
         <item>По умолчанию</item>
         <item>По названию</item>

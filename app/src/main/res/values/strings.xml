@@ -8,6 +8,9 @@
     <string name="featured_authors">Featured authors</string>
     <string name="about_the_application">About the application</string>
 
+    <string name="share">Share</string>
+    <string name="mistakes">Mistakes</string>
+
     <string-array name="sort_list">
         <item>Default</item>
         <item>By name</item>

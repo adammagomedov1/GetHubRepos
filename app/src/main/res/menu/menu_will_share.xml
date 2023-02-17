@@ -4,6 +4,6 @@
     <item
         android:id="@+id/will_share"
         android:background="?selectableItemBackground"
-        android:title="Поделится"/>
+        android:title="@string/share"/>
 
 </menu>
