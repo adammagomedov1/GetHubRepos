@@ -15,6 +15,9 @@
     <string name="тumber_of_repositories">Repositories</string>
     <string name="subscribers">Subscribers:</string>
 
+    <string name="github">Unofficial client for GitHub</string>
+    <string name="author_magomedov_adam">Author: Magomedov Adam</string>
+
     <string-array name="sort_list">
         <item>Default</item>
         <item>By name</item>

@@ -15,6 +15,9 @@
     <string name="тumber_of_repositories">Репозитории</string>
     <string name="subscribers">Подписчики:</string>
 
+    <string name="github">Неофициальный клиент для GitHub</string>
+    <string name="author_magomedov_adam">Автор: Магомедов Адам</string>
+
     <string-array name="sort_list">
         <item>По умолчанию</item>
         <item>По названию</item>

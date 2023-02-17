@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/arrow_back"
-        app:title="О приложении" />
+        app:title="@string/about_the_application" />
 
     <ImageView
         android:layout_width="80dp"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:text="Неофициальный клиент для GitHub"
+        android:text="@string/github"
         android:textColor="#666666"
         android:textSize="16dp" />
 
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
-        android:text="Автор: Магомедов Адам "
+        android:text="@string/author_magomedov_adam"
         android:textColor="#666666"
         android:textSize="16dp" />
 
