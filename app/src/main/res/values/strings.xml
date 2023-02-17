@@ -2,6 +2,12 @@
     <string name="app_name">GitHubRepos</string>
     <string name="Репозитории">Выберите общее количество отображаемых репозиториев на экране (только числа)</string>
 
+    <string name="repositories">Репозитории</string>
+    <string name="sort">Сортировать</string>
+    <string name="settings">Настройки</string>
+    <string name="featured_authors">Избранные авторы</string>
+    <string name="about_the_application">О приложении</string>
+
     <string-array name="sort_list">
         <item>По умолчанию</item>
         <item>По названию</item>

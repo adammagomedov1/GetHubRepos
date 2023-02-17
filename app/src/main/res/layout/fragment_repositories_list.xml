@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:menu="@menu/menu"
-        app:title="Репозитории" />
+        app:title="@string/repositories" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:layout_marginTop="9dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="4"
-            android:text="Сортировать"
+            android:text="@string/sort"
             android:textColor="@color/black"
             android:textSize="14dp" />
 
