@@ -18,6 +18,10 @@
     <string name="github">Неофициальный клиент для GitHub</string>
     <string name="author_magomedov_adam">Автор: Магомедов Адам</string>
 
+    <string name="are_common">Общие</string>
+    <string name="number_of_displayed_repositories">Кол-во отображаемых репозиториев</string>
+    <string name="save">Сохранить</string>
+
     <string-array name="sort_list">
         <item>По умолчанию</item>
         <item>По названию</item>

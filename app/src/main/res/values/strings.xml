@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">GitHubRepos</string>
-    <string name="Репозитории">Выберите общее количество отображаемых репозиториев на экране (только числа)</string>
+    <string name="Репозитории">Select the total number of repositories to display on the screen (numbers only)</string>
 
     <string name="repositories">Repositories</string>
     <string name="sort">Sort</string>
@@ -17,6 +17,10 @@
 
     <string name="github">Unofficial client for GitHub</string>
     <string name="author_magomedov_adam">Author: Magomedov Adam</string>
+
+    <string name="are_common">Are common</string>
+    <string name="number_of_displayed_repositories">Number of displayed repositories</string>
+    <string name="save">Save</string>
 
     <string-array name="sort_list">
         <item>Default</item>
