@@ -11,6 +11,9 @@
     <string name="share">Share</string>
     <string name="mistakes">Mistakes</string>
 
+    <string name="subscriptions">Subscriptions:</string>
+    <string name="тumber_of_repositories">Repositories</string>
+
     <string-array name="sort_list">
         <item>Default</item>
         <item>By name</item>

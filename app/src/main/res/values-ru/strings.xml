@@ -11,6 +11,9 @@
     <string name="share">Поделится</string>
     <string name="mistakes">Ошибки</string>
 
+    <string name="subscriptions">Подписки:</string>
+    <string name="тumber_of_repositories">Репозитории</string>
+
     <string-array name="sort_list">
         <item>По умолчанию</item>
         <item>По названию</item>
