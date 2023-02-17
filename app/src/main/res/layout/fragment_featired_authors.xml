@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/arrow_back"
-        app:title="Избранные авторы" />
+        app:title="@string/featured_authors" />
 
     <EditText
         android:id="@+id/sorting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:hint="Поиск автора" />
+        android:hint="@string/author_search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/featured_authors"

@@ -22,6 +22,8 @@
     <string name="number_of_displayed_repositories">Number of displayed repositories</string>
     <string name="save">Save</string>
 
+    <string name="author_search">Author search</string>
+
     <string-array name="sort_list">
         <item>Default</item>
         <item>By name</item>
