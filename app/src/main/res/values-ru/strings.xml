@@ -13,6 +13,7 @@
 
     <string name="subscriptions">Подписки:</string>
     <string name="тumber_of_repositories">Репозитории</string>
+    <string name="subscribers">Подписчики:</string>
 
     <string-array name="sort_list">
         <item>По умолчанию</item>

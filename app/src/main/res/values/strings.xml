@@ -13,6 +13,7 @@
 
     <string name="subscriptions">Subscriptions:</string>
     <string name="тumber_of_repositories">Repositories</string>
+    <string name="subscribers">Subscribers:</string>
 
     <string-array name="sort_list">
         <item>Default</item>
