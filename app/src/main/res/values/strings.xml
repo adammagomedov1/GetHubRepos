@@ -24,6 +24,8 @@
 
     <string name="author_search">Author search</string>
 
+    <string name="added_to_favorites">Added to favorites</string>
+
     <string-array name="sort_list">
         <item>Default</item>
         <item>By name</item>

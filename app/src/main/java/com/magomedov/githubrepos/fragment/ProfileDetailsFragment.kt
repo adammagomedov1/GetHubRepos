@@ -50,7 +50,7 @@ class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
 
                     val addedProfile: Snackbar = Snackbar.make(
                         view,
-                        "Добавлено в избраное",
+                        R.string.added_to_favorites,
                         Snackbar.LENGTH_LONG
                     )
                     addedProfile.show()

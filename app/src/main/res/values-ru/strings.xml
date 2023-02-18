@@ -23,6 +23,8 @@
     <string name="save">Сохранить</string>
 
     <string name="author_search">Поиск автора</string>
+    
+    <string name="added_to_favorites">Добавлено в избранное</string>
 
     <string-array name="sort_list">
         <item>По умолчанию</item>
