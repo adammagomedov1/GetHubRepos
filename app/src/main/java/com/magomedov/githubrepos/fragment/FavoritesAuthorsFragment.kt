@@ -15,7 +15,7 @@ import com.magomedov.githubrepos.models.Favorites
 import com.magomedov.githubrepos.network.FavoriteDao
 
 class FavoritesAuthorsFragment : Fragment(R.layout.fragment_featired_authors) {
-    private var binding : FragmentFeatiredAuthorsBinding? = null
+    private var binding: FragmentFeatiredAuthorsBinding? = null
 
     val authorsDao: FavoriteDao = GitHubReposApplication.appDatabase.favoritesDao()
 
