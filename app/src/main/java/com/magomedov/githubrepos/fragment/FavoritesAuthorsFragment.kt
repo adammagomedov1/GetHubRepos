@@ -5,18 +5,17 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
 import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.adapters.FavoritesAuthorsAdapter
+import com.magomedov.githubrepos.databinding.FragmentFeatiredAuthorsBinding
 import com.magomedov.githubrepos.models.Favorites
 import com.magomedov.githubrepos.network.FavoriteDao
 
 class FavoritesAuthorsFragment : Fragment(R.layout.fragment_featired_authors) {
+    private var binding : FragmentFeatiredAuthorsBinding? = null
 
     val authorsDao: FavoriteDao = GitHubReposApplication.appDatabase.favoritesDao()
 
@@ -31,26 +30,24 @@ class FavoritesAuthorsFragment : Fragment(R.layout.fragment_featired_authors) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentFeatiredAuthorsBinding.bind(view)
 
-        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
-        toolbar.setNavigationOnClickListener(object : View.OnClickListener {
+        binding!!.toolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 requireActivity().supportFragmentManager.popBackStack()
             }
         })
 
-        val authorsRecyclerView: RecyclerView = view.findViewById(R.id.featured_authors)
-        authorsRecyclerView.setAdapter(authorsAdapter)
+        binding!!.featuredAuthors.setAdapter(authorsAdapter)
 
         val dividerAuthors = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        authorsRecyclerView.addItemDecoration(dividerAuthors)
+        binding!!.featuredAuthors.addItemDecoration(dividerAuthors)
 
         updateAuthorsList()
 
         val listOf = authorsAdapter.authors
 
-        val nameEditText: EditText = view.findViewById(R.id.sorting)
-        nameEditText.addTextChangedListener(object : TextWatcher {
+        binding!!.sorting.addTextChangedListener(object : TextWatcher {
             //Вызывается ДО изменения текста
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -79,5 +76,10 @@ class FavoritesAuthorsFragment : Fragment(R.layout.fragment_featired_authors) {
         val authorsList: List<Favorites> = authorsDao.getAllAuthors()
         authorsAdapter.authors = authorsList
         authorsAdapter.notifyDataSetChanged()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }
