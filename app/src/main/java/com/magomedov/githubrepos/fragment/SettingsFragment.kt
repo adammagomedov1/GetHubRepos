@@ -10,7 +10,7 @@ import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
-    private var binding : FragmentSettingsBinding? = null
+    private var binding: FragmentSettingsBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
