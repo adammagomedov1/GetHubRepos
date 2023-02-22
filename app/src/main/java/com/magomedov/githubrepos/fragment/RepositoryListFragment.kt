@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ProgressBar
 import android.widget.Spinner
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -17,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.adapters.RepositoryAdapter
+import com.magomedov.githubrepos.databinding.FragmentRepositoriesListBinding
 import com.magomedov.githubrepos.models.Repository
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,6 +24,7 @@ import retrofit2.Response
 
 // Экран отоброжаюший репозиториев
 class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
+    private var binding: FragmentRepositoriesListBinding? = null
 
 
     val repositoryAdapter =
@@ -46,9 +47,9 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentRepositoriesListBinding.bind(view)
 
-        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
-        toolbar.setOnMenuItemClickListener(object : Toolbar.OnMenuItemClickListener {
+        binding!!.toolbar.setOnMenuItemClickListener(object : Toolbar.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item?.itemId == R.id.featured_authors_menu) {
                     val featuredAuthors = FavoritesAuthorsFragment()
@@ -109,17 +110,16 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
 
 
         val repositoryListRecyclerView: RecyclerView = view.findViewById(R.id.list_recyclerview)
-        repositoryListRecyclerView.adapter = repositoryAdapter
+        binding!!.listRecyclerview.adapter = repositoryAdapter
 
         loadRepositories()
 
         val decider = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        repositoryListRecyclerView.addItemDecoration(decider)
+        binding!!.listRecyclerview.addItemDecoration(decider)
     }
 
     private fun loadRepositories() {
-        val progressBar: ProgressBar = requireView().findViewById(R.id.link_progressbar)
-        progressBar.visibility = View.VISIBLE
+        binding!!.linkProgressbar.visibility = View.VISIBLE
 
 
         val getRepository: Call<List<Repository>> =
@@ -130,7 +130,7 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
                 call: Call<List<Repository>>,
                 response: Response<List<Repository>>
             ) {
-                progressBar.visibility = View.GONE
+                binding!!.linkProgressbar.visibility = View.GONE
 
                 val repositoryList: List<Repository> = response.body()!!
 
@@ -144,7 +144,7 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
                 var repositoriesInt = 0
 
                 repositoriesInt = if (!repositoriesEditor.isNullOrEmpty()) {
-                    repositoriesEditor!!.toInt()
+                    repositoriesEditor.toInt()
                 } else {
                     repositoryList.size
                 }
@@ -156,7 +156,7 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
             }
 
             override fun onFailure(call: Call<List<Repository>>, t: Throwable) {
-                progressBar.visibility = View.GONE
+                binding!!.linkProgressbar.visibility = View.GONE
 
                 val error: Snackbar = Snackbar.make(
                     requireView(),
@@ -166,5 +166,10 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
                 error.show()
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }
