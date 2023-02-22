@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
@@ -108,8 +107,6 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
 
         })
 
-
-        val repositoryListRecyclerView: RecyclerView = view.findViewById(R.id.list_recyclerview)
         binding!!.listRecyclerview.adapter = repositoryAdapter
 
         loadRepositories()
@@ -120,7 +117,6 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
 
     private fun loadRepositories() {
         binding!!.linkProgressbar.visibility = View.VISIBLE
-
 
         val getRepository: Call<List<Repository>> =
             GitHubReposApplication.gitHubService.getRepositoryList()

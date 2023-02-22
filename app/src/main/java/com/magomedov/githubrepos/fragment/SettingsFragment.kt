@@ -4,22 +4,19 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.R
+import com.magomedov.githubrepos.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
-
-    lateinit var repositories: EditText
+    private var binding : FragmentSettingsBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentSettingsBinding.bind(view)
 
-        val toolbar: Toolbar = view.findViewById(R.id.settings_toolbar)
-        toolbar.setNavigationOnClickListener(object : View.OnClickListener {
+        binding!!.settingsToolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 requireActivity().supportFragmentManager.popBackStack()
             }
@@ -30,14 +27,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             Context.MODE_PRIVATE
         )
 
-        repositories = view.findViewById(R.id.settings_edit_text)
-
         val repositoriesEditor: String? =
             sharedPreferences.getString("repositories", null)
-        repositories.setText(repositoriesEditor)
+        binding!!.settingsEditText.setText(repositoriesEditor)
 
-        val button: Button = view.findViewById(R.id.settings_button)
-        button.setOnClickListener(object : View.OnClickListener {
+        binding!!.settingsButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 saveSettings()
             }
@@ -49,7 +43,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             "git_hub_preferences",
             Context.MODE_PRIVATE
         )
-        val repositoryList = repositories.text.toString()
+        val repositoryList = binding!!.settingsEditText.text.toString()
 
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
         editor.putString("repositories", repositoryList)
@@ -61,5 +55,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             Snackbar.LENGTH_LONG
         )
         snackbar.show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }
