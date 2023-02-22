@@ -3,9 +3,9 @@ package com.magomedov.githubrepos.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.magomedov.githubrepos.R
+import com.magomedov.githubrepos.databinding.ItemRepositoryBinding
 import com.magomedov.githubrepos.models.Repository
 
 class RepositoryAdapter(val repositoryListener: RepositoryAdapter.RepositoryListener) :
@@ -14,12 +14,7 @@ class RepositoryAdapter(val repositoryListener: RepositoryAdapter.RepositoryList
     var repositoryList: List<Repository> = emptyList()
 
     class RepositoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-
-        val nameTextView: TextView = itemView.findViewById(R.id.name)
-        val ovnerTextView: TextView = itemView.findViewById(R.id.owner)
-        val descriptionTextView: TextView = itemView.findViewById(R.id.description)
-
+        val binding: ItemRepositoryBinding = ItemRepositoryBinding.bind(itemView)
 
     }
 
@@ -37,9 +32,9 @@ class RepositoryAdapter(val repositoryListener: RepositoryAdapter.RepositoryList
 
     override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {
         val repository: Repository = repositoryList.get(position)
-        holder.nameTextView.setText(repository.name)
-        holder.descriptionTextView.setText(repository.description)
-        holder.ovnerTextView.setText(repository.owner.login)
+        holder.binding.name.setText(repository.name)
+        holder.binding.description.setText(repository.description)
+        holder.binding.owner.setText(repository.owner.login)
 
 
         holder.itemView.setOnClickListener(object : View.OnClickListener {
