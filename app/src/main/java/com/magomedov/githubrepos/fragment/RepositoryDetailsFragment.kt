@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.databinding.FragmentRepositoryDetailsBinding
+import com.magomedov.githubrepos.fragment.ProfileDetailsFragment.Companion.repositoryDetails
 import com.magomedov.githubrepos.models.RepositoryDetails
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,8 +23,6 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
 
     lateinit var getRepositoryDetails: Call<RepositoryDetails>
 
-    var repositoryDetails: RepositoryDetails? = null
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRepositoryDetailsBinding.bind(view)
@@ -31,11 +30,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
         binding!!.linearlayout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
-                val repositoryProfileFragment = ProfileDetailsFragment()
-                val bundle = Bundle()
-                bundle.putString("login", repositoryDetails!!.picture.login)
-                repositoryProfileFragment.arguments = bundle
-
+                val repositoryProfileFragment = ProfileDetailsFragment.createFragment()
                 val transaction: FragmentTransaction =
                     requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_main_container, repositoryProfileFragment)
