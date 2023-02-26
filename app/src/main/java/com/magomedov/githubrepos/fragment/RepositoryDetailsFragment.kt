@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.databinding.FragmentRepositoryDetailsBinding
-import com.magomedov.githubrepos.fragment.ProfileDetailsFragment.Companion.repositoryDetails
+import com.magomedov.githubrepos.models.Repository
 import com.magomedov.githubrepos.models.RepositoryDetails
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,6 +23,8 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
 
     lateinit var getRepositoryDetails: Call<RepositoryDetails>
 
+    var repositoryDetails: RepositoryDetails? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRepositoryDetailsBinding.bind(view)
@@ -30,7 +32,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
         binding!!.linearlayout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
-                val repositoryProfileFragment = ProfileDetailsFragment.createFragment()
+                val repositoryProfileFragment = ProfileDetailsFragment.createFragment(repositoryDetails!!)
                 val transaction: FragmentTransaction =
                     requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_main_container, repositoryProfileFragment)
@@ -45,7 +47,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
             }
         })
 
-        val repositoryId: Int = requireArguments().getInt("id", 0)
+        val repositoryId: Int = requireArguments().getInt(ARGUMENT_ID, 0)
         getRepositoryDetails =
             GitHubReposApplication.gitHubService.getRepositoryDetails(repositoryId)
 
@@ -118,5 +120,16 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+    companion object {
+        const val ARGUMENT_ID = "id"
+
+        fun createFragment(repository: Repository) : Fragment {
+            val fragment = RepositoryDetailsFragment()
+            val bundle = Bundle()
+            bundle.putInt(ARGUMENT_ID, repository.id)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }

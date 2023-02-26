@@ -30,11 +30,7 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
         RepositoryAdapter(repositoryListener = object : RepositoryAdapter.RepositoryListener {
             override fun onItemClick(repository: Repository) {
 
-                val repositoryDetailsFragment = RepositoryDetailsFragment()
-                val bundle = Bundle()
-                bundle.putInt("id", repository.id)
-                repositoryDetailsFragment.arguments = bundle
-
+                val repositoryDetailsFragment = RepositoryDetailsFragment.createFragment(repository)
                 val transaction: FragmentTransaction =
                     requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_main_container, repositoryDetailsFragment)

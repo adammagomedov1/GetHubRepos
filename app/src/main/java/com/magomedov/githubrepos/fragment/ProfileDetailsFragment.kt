@@ -111,12 +111,11 @@ class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
 
     companion object {
         const val ARGUMENT_LOGIN = "login"
-        var repositoryDetails: RepositoryDetails? = null
 
-        fun createFragment(): Fragment {
+        fun createFragment(repositoryDetails: RepositoryDetails): Fragment {
             val fragment = ProfileDetailsFragment()
             val bundle = Bundle()
-            bundle.putString(ARGUMENT_LOGIN, repositoryDetails!!.picture.login)
+            bundle.putString(ARGUMENT_LOGIN, repositoryDetails.picture.login)
             fragment.arguments = bundle
             return fragment
         }
