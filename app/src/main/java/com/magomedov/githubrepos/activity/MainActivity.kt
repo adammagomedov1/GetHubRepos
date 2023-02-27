@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.fragment.RepositoryListFragment
+import me.aartikov.alligator.NavigationContext
 
 //Главный экран приложения
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -45,4 +47,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         transaction.commit()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val navigationContext: NavigationContext =
+            NavigationContext.Builder(this, GitHubReposApplication.navigatorFactory)
+                .fragmentNavigation(supportFragmentManager, R.id.fragment_main_container)
+                .build()
+        GitHubReposApplication.navigationContextBinder.bind(navigationContext)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        GitHubReposApplication.navigationContextBinder.unbind(this)
+    }
 }

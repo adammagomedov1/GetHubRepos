@@ -4,6 +4,10 @@ import android.app.Application
 import androidx.room.Room
 import com.magomedov.githubrepos.database.AppDatabase
 import com.magomedov.githubrepos.network.GitHobService
+import me.aartikov.alligator.AndroidNavigator
+import me.aartikov.alligator.NavigationContextBinder
+import me.aartikov.alligator.Navigator
+import me.aartikov.alligator.navigationfactories.NavigationFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
@@ -27,13 +31,20 @@ class GitHubReposApplication : Application() {
 
         gitHubService = retrofit.create()
 
+        androidNavigator = AndroidNavigator(AppNavigatorFactory())
+        navigatorFactory = androidNavigator.navigationFactory
+        navigationContextBinder = androidNavigator
+        navigator = androidNavigator
     }
 
     companion object {
 
-        lateinit var appDatabase : AppDatabase
-
+        lateinit var appDatabase: AppDatabase
         lateinit var gitHubService: GitHobService
 
+        private lateinit var androidNavigator: AndroidNavigator
+        lateinit var navigatorFactory: NavigationFactory
+        lateinit var navigationContextBinder: NavigationContextBinder
+        lateinit var navigator: Navigator
     }
 }
