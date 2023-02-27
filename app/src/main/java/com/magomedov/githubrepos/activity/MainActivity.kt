@@ -3,10 +3,9 @@ package com.magomedov.githubrepos.activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import com.magomedov.githubrepos.GitHubReposApplication
+import com.magomedov.githubrepos.NomeScreen
 import com.magomedov.githubrepos.R
-import com.magomedov.githubrepos.fragment.RepositoryListFragment
 import me.aartikov.alligator.NavigationContext
 
 //Главный экран приложения
@@ -42,9 +41,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun navigateFragment() {
         //Выполняется переход на экран списка репозиториев
-        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_main_container, RepositoryListFragment())
-        transaction.commit()
+        GitHubReposApplication.navigator.replace(NomeScreen())
     }
 
     override fun onResume() {
