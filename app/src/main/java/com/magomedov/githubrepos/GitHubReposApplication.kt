@@ -7,6 +7,7 @@ import com.magomedov.githubrepos.network.GitHobService
 import me.aartikov.alligator.AndroidNavigator
 import me.aartikov.alligator.NavigationContextBinder
 import me.aartikov.alligator.Navigator
+import me.aartikov.alligator.ScreenResolver
 import me.aartikov.alligator.navigationfactories.NavigationFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -35,6 +36,7 @@ class GitHubReposApplication : Application() {
         navigatorFactory = androidNavigator.navigationFactory
         navigationContextBinder = androidNavigator
         navigator = androidNavigator
+        screenResolver = androidNavigator.screenResolver
     }
 
     companion object {
@@ -46,5 +48,6 @@ class GitHubReposApplication : Application() {
         lateinit var navigatorFactory: NavigationFactory
         lateinit var navigationContextBinder: NavigationContextBinder
         lateinit var navigator: Navigator
+        lateinit var screenResolver: ScreenResolver
     }
 }

@@ -6,10 +6,10 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
+import com.magomedov.githubrepos.ProfileDetailsScreen
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.databinding.FragmentRepositoryDetailsBinding
 import com.magomedov.githubrepos.models.Repository
@@ -32,12 +32,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
         binding!!.linearlayout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
-                val repositoryProfileFragment = ProfileDetailsFragment.createFragment(repositoryDetails!!)
-                val transaction: FragmentTransaction =
-                    requireActivity().supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fragment_main_container, repositoryProfileFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                GitHubReposApplication.navigator.goForward(ProfileDetailsScreen(repositoryDetails!!))
             }
         })
 
