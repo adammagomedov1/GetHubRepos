@@ -57,4 +57,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onPause()
         GitHubReposApplication.navigationContextBinder.unbind(this)
     }
+
+    override fun onBackPressed() {
+        GitHubReposApplication.navigator.goBack()
+    }
 }
