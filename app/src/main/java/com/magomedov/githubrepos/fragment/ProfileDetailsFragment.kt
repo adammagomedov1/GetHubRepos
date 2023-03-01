@@ -32,7 +32,7 @@ class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
 
         binding!!.toolbarId.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                requireActivity().supportFragmentManager.popBackStack()
+                GitHubReposApplication.navigator.goBack()
             }
         })
 
@@ -58,7 +58,8 @@ class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
         })
 
         val screen = GitHubReposApplication.screenResolver.getScreen<ProfileDetailsScreen>(this)
-        getRepositoryProfile = GitHubReposApplication.gitHubService.getRepositoryProfile(screen.repositoryDetails.picture.login)
+        getRepositoryProfile =
+            GitHubReposApplication.gitHubService.getRepositoryProfile(screen.repositoryDetails.picture.login)
 
         getRepositoryProfile.enqueue(object : Callback<ProfileDetails> {
 

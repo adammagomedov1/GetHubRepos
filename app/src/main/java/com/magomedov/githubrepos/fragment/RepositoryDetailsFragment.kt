@@ -12,7 +12,6 @@ import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.ProfileDetailsScreen
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.databinding.FragmentRepositoryDetailsBinding
-import com.magomedov.githubrepos.models.Repository
 import com.magomedov.githubrepos.models.RepositoryDetails
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,8 +42,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
         })
 
         val repositoryId: Int = requireArguments().getInt(ARGUMENT_ID, 0)
-        getRepositoryDetails =
-            GitHubReposApplication.gitHubService.getRepositoryDetails(repositoryId)
+        getRepositoryDetails = GitHubReposApplication.gitHubService.getRepositoryDetails(repositoryId)
 
         getRepositoryDetails.enqueue(object : Callback<RepositoryDetails> {
 
@@ -119,12 +117,5 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
     companion object {
         const val ARGUMENT_ID = "id"
 
-        fun createFragment(repository: Repository) : Fragment {
-            val fragment = RepositoryDetailsFragment()
-            val bundle = Bundle()
-            bundle.putInt(ARGUMENT_ID, repository.id)
-            fragment.arguments = bundle
-            return fragment
-        }
     }
 }
