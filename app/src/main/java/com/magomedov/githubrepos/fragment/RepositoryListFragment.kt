@@ -27,13 +27,7 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
     val repositoryAdapter =
         RepositoryAdapter(repositoryListener = object : RepositoryAdapter.RepositoryListener {
             override fun onItemClick(repository: Repository) {
-
-//                val repositoryDetailsFragment = RepositoryDetailsFragment.createFragment(repository)
-//                val transaction: FragmentTransaction =
-//                    requireActivity().supportFragmentManager.beginTransaction()
-//                transaction.replace(R.id.fragment_main_container, repositoryDetailsFragment)
-//                transaction.addToBackStack(null)
-//                transaction.commit()
+                GitHubReposApplication.navigator.goForward(RepositoryDetailsScreen(repository))
             }
         })
 

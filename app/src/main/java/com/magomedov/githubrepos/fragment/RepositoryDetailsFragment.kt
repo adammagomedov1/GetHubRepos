@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.ProfileDetailsScreen
 import com.magomedov.githubrepos.R
+import com.magomedov.githubrepos.RepositoryDetailsScreen
 import com.magomedov.githubrepos.databinding.FragmentRepositoryDetailsBinding
 import com.magomedov.githubrepos.models.RepositoryDetails
 import retrofit2.Call
@@ -41,8 +42,8 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
             }
         })
 
-        val repositoryId: Int = requireArguments().getInt(ARGUMENT_ID, 0)
-        getRepositoryDetails = GitHubReposApplication.gitHubService.getRepositoryDetails(repositoryId)
+        val screen = GitHubReposApplication.screenResolver.getScreen<RepositoryDetailsScreen>(this)
+        getRepositoryDetails = GitHubReposApplication.gitHubService.getRepositoryDetails(screen.repository.id)
 
         getRepositoryDetails.enqueue(object : Callback<RepositoryDetails> {
 
@@ -113,9 +114,5 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-    companion object {
-        const val ARGUMENT_ID = "id"
-
     }
 }

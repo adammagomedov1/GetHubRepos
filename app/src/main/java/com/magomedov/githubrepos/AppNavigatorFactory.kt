@@ -10,5 +10,6 @@ class AppNavigatorFactory : RegistryNavigationFactory() {
         registerFragment(FeaturedAuthorsScreen::class.java, FavoritesAuthorsFragment::class.java)
         registerFragment(AboutAppScreen::class.java, AboutAppFragment::class.java)
         registerFragment(SettingsScreen::class.java, SettingsFragment::class.java)
+        registerFragment(RepositoryDetailsScreen::class.java, RepositoryDetailsFragment::class.java)
     }
 }
