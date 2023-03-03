@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
+import com.magomedov.githubrepos.Screens
 import com.magomedov.githubrepos.adapters.RepositoryAdapter
 import com.magomedov.githubrepos.databinding.FragmentRepositoriesListBinding
 import com.magomedov.githubrepos.models.Repository
@@ -29,6 +30,7 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
         RepositoryAdapter(repositoryListener = object : RepositoryAdapter.RepositoryListener {
             override fun onItemClick(repository: Repository) {
 //                GitHubReposApplication.navigator.goForward(RepositoryDetailsScreen(repository))
+                GitHubReposApplication.router.navigateTo(Screens.repositoryDetails(repository))
             }
         })
 
@@ -40,12 +42,15 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item?.itemId == R.id.featured_authors_menu) {
 //                    GitHubReposApplication.navigator.goForward(FeaturedAuthorsScreen())
+                    GitHubReposApplication.router.navigateTo(Screens.featuredAuthors())
                 }
                 if (item?.itemId == R.id.about_application_menu) {
 //                    GitHubReposApplication.navigator.goForward(AboutAppScreen())
+                    GitHubReposApplication.router.navigateTo(Screens.aboutApp())
                 }
                 if (item?.itemId == R.id.settings_menu) {
 //                    GitHubReposApplication.navigator.goForward(SettingsScreen())
+                    GitHubReposApplication.router.navigateTo(Screens.settings())
                 }
                 return true
             }
