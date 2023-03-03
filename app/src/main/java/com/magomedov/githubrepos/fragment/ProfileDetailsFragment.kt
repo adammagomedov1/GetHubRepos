@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
-import com.magomedov.githubrepos.ProfileDetailsScreen
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.databinding.FragmentProfileDetailsBinding
 import com.magomedov.githubrepos.models.Favorites
@@ -32,7 +31,7 @@ class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
 
         binding!!.toolbarId.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                GitHubReposApplication.navigator.goBack()
+//                GitHubReposApplication.navigator.goBack()
             }
         })
 
@@ -57,9 +56,9 @@ class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
             }
         })
 
-        val screen = GitHubReposApplication.screenResolver.getScreen<ProfileDetailsScreen>(this)
-        getRepositoryProfile =
-            GitHubReposApplication.gitHubService.getRepositoryProfile(screen.repositoryDetails.picture.login)
+//        val screen = GitHubReposApplication.screenResolver.getScreen<ProfileDetailsScreen>(this)
+//        getRepositoryProfile =
+//            GitHubReposApplication.gitHubService.getRepositoryProfile(screen.repositoryDetails.picture.login)
 
         getRepositoryProfile.enqueue(object : Callback<ProfileDetails> {
 

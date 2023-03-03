@@ -8,10 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.magomedov.githubrepos.GitHubReposApplication
-import com.magomedov.githubrepos.ProfileDetailsScreen
 import com.magomedov.githubrepos.R
-import com.magomedov.githubrepos.RepositoryDetailsScreen
 import com.magomedov.githubrepos.databinding.FragmentRepositoryDetailsBinding
 import com.magomedov.githubrepos.models.RepositoryDetails
 import retrofit2.Call
@@ -32,7 +29,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
         binding!!.linearlayout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
-                GitHubReposApplication.navigator.goForward(ProfileDetailsScreen(repositoryDetails!!))
+//                GitHubReposApplication.navigator.goForward(ProfileDetailsScreen(repositoryDetails!!))
             }
         })
 
@@ -42,8 +39,8 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
             }
         })
 
-        val screen = GitHubReposApplication.screenResolver.getScreen<RepositoryDetailsScreen>(this)
-        getRepositoryDetails = GitHubReposApplication.gitHubService.getRepositoryDetails(screen.repository.id)
+//        val screen = GitHubReposApplication.screenResolver.getScreen<RepositoryDetailsScreen>(this)
+//        getRepositoryDetails = GitHubReposApplication.gitHubService.getRepositoryDetails(screen.repository.id)
 
         getRepositoryDetails.enqueue(object : Callback<RepositoryDetails> {
 

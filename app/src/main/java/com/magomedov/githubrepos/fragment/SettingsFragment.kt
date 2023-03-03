@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.databinding.FragmentSettingsBinding
 
@@ -19,7 +18,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         binding!!.settingsToolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                GitHubReposApplication.navigator.goBack()
+//                GitHubReposApplication.navigator.goBack()
             }
         })
 

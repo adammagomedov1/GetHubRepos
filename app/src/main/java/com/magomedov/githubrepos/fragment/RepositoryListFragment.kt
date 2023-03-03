@@ -11,7 +11,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
-import com.magomedov.githubrepos.*
+import com.magomedov.githubrepos.GitHubReposApplication
+import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.adapters.RepositoryAdapter
 import com.magomedov.githubrepos.databinding.FragmentRepositoriesListBinding
 import com.magomedov.githubrepos.models.Repository
@@ -27,7 +28,7 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
     val repositoryAdapter =
         RepositoryAdapter(repositoryListener = object : RepositoryAdapter.RepositoryListener {
             override fun onItemClick(repository: Repository) {
-                GitHubReposApplication.navigator.goForward(RepositoryDetailsScreen(repository))
+//                GitHubReposApplication.navigator.goForward(RepositoryDetailsScreen(repository))
             }
         })
 
@@ -38,13 +39,13 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
         binding!!.toolbar.setOnMenuItemClickListener(object : Toolbar.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item?.itemId == R.id.featured_authors_menu) {
-                    GitHubReposApplication.navigator.goForward(FeaturedAuthorsScreen())
+//                    GitHubReposApplication.navigator.goForward(FeaturedAuthorsScreen())
                 }
                 if (item?.itemId == R.id.about_application_menu) {
-                    GitHubReposApplication.navigator.goForward(AboutAppScreen())
+//                    GitHubReposApplication.navigator.goForward(AboutAppScreen())
                 }
                 if (item?.itemId == R.id.settings_menu) {
-                    GitHubReposApplication.navigator.goForward(SettingsScreen())
+//                    GitHubReposApplication.navigator.goForward(SettingsScreen())
                 }
                 return true
             }
