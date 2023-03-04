@@ -7,8 +7,8 @@ import com.magomedov.githubrepos.models.RepositoryDetails
 
 object Screens {
     fun home() = FragmentScreen { RepositoryListFragment() }
+    fun repositoryDetails(repository: Repository) = FragmentScreen { RepositoryDetailsFragment.createArgument(repository = repository) }
     fun profile(repositoryDetails: RepositoryDetails) = FragmentScreen { ProfileDetailsFragment() }
-    fun repositoryDetails(repository: Repository) = FragmentScreen { RepositoryDetailsFragment() }
     fun featuredAuthors() = FragmentScreen { FavoritesAuthorsFragment() }
     fun aboutApp() = FragmentScreen { AboutAppFragment() }
     fun settings() = FragmentScreen { SettingsFragment() }

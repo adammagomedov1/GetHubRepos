@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
+import com.magomedov.githubrepos.Screens
 import com.magomedov.githubrepos.databinding.FragmentProfileDetailsBinding
 import com.magomedov.githubrepos.models.Favorites
 import com.magomedov.githubrepos.models.ProfileDetails
@@ -56,7 +57,9 @@ class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
             }
         })
 
-//        getRepositoryProfile = GitHubReposApplication.gitHubService.getRepositoryProfile(screen.repositoryDetails.picture.login)
+        val repositoryDetails = requireArguments().getString(0.toString())
+        getRepositoryProfile =
+            GitHubReposApplication.gitHubService.getRepositoryProfile(repositoryDetails.picture.login)
 
 
         getRepositoryProfile.enqueue(object : Callback<ProfileDetails> {

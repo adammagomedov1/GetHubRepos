@@ -12,10 +12,12 @@ import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.Screens
 import com.magomedov.githubrepos.databinding.FragmentRepositoryDetailsBinding
+import com.magomedov.githubrepos.models.Repository
 import com.magomedov.githubrepos.models.RepositoryDetails
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
 
 class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details) {
     private var binding: FragmentRepositoryDetailsBinding? = null
@@ -41,8 +43,10 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
             }
         })
 
-//        val screen = GitHubReposApplication.screenResolver.getScreen<RepositoryDetailsScreen>(this)
-//        getRepositoryDetails = GitHubReposApplication.gitHubService.getRepositoryDetails(screen.repository.id)
+        val repositoryId: Serializable? = requireArguments().getSerializable(ARGUMENT_DETAILS)
+        val repository = repositoryId as? Repository
+        getRepositoryDetails =
+            GitHubReposApplication.gitHubService.getRepositoryDetails(repository!!.id)
 
         getRepositoryDetails.enqueue(object : Callback<RepositoryDetails> {
 
@@ -113,5 +117,17 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    companion object {
+        const val ARGUMENT_DETAILS = "deletes"
+
+        fun createArgument(repository: Repository): Fragment {
+            val fragment = RepositoryDetailsFragment()
+            val bundle = Bundle()
+            bundle.putSerializable(ARGUMENT_DETAILS, repository)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }
