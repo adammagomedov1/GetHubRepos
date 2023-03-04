@@ -9,10 +9,10 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
-import com.magomedov.githubrepos.Screens
 import com.magomedov.githubrepos.databinding.FragmentProfileDetailsBinding
 import com.magomedov.githubrepos.models.Favorites
 import com.magomedov.githubrepos.models.ProfileDetails
+import com.magomedov.githubrepos.models.RepositoryDetails
 import com.magomedov.githubrepos.network.FavoriteDao
 import retrofit2.Call
 import retrofit2.Callback
@@ -57,9 +57,10 @@ class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
             }
         })
 
-        val repositoryDetails = requireArguments().getString(0.toString())
+        val repositoryDetailsSerializable = requireArguments().getSerializable(ARGUMENT_PROFILE)
+        val repositoryDetails : RepositoryDetails? = repositoryDetailsSerializable as? RepositoryDetails
         getRepositoryProfile =
-            GitHubReposApplication.gitHubService.getRepositoryProfile(repositoryDetails.picture.login)
+            GitHubReposApplication.gitHubService.getRepositoryProfile(repositoryDetails!!.picture.login)
 
 
         getRepositoryProfile.enqueue(object : Callback<ProfileDetails> {
@@ -109,5 +110,18 @@ class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    companion object {
+        const val ARGUMENT_PROFILE = "profile"
+
+        fun createFragment(repositoryDetails: RepositoryDetails): Fragment {
+            val fragment = ProfileDetailsFragment()
+            val bundle = Bundle()
+            bundle.putSerializable(ARGUMENT_PROFILE, repositoryDetails)
+            fragment.arguments = bundle
+
+            return fragment
+        }
     }
 }

@@ -122,7 +122,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
     companion object {
         const val ARGUMENT_DETAILS = "deletes"
 
-        fun createArgument(repository: Repository): Fragment {
+        fun createFragment(repository: Repository): Fragment {
             val fragment = RepositoryDetailsFragment()
             val bundle = Bundle()
             bundle.putSerializable(ARGUMENT_DETAILS, repository)
