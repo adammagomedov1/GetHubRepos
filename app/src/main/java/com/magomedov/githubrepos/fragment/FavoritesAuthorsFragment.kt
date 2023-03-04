@@ -34,7 +34,7 @@ class FavoritesAuthorsFragment : Fragment(R.layout.fragment_featired_authors) {
 
         binding!!.toolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-//                GitHubReposApplication.navigator.goBack()
+                GitHubReposApplication.router.exit()
             }
         })
 

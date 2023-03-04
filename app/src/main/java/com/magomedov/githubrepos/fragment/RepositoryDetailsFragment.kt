@@ -39,7 +39,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
 
         binding!!.toolbar.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                requireActivity().supportFragmentManager.popBackStack()
+                GitHubReposApplication.router.exit()
             }
         })
 

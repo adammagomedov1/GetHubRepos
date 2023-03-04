@@ -3,6 +3,7 @@ package com.magomedov.githubrepos.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.databinding.FragmentAboutAppBinding
 
@@ -15,7 +16,7 @@ class AboutAppFragment : Fragment(R.layout.fragment_about_app) {
 
         binding!!.toolbarAboutApp.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-//                GitHubReposApplication.navigator.goBack()
+                GitHubReposApplication.router.exit()
             }
         })
     }

@@ -32,7 +32,7 @@ class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
 
         binding!!.toolbarId.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-//                GitHubReposApplication.navigator.goBack()
+                GitHubReposApplication.router.exit()
             }
         })
 
