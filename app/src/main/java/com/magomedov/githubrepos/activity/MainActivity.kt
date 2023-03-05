@@ -44,27 +44,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun navigateFragment() {
         //Выполняется переход на экран списка репозиториев
-//        GitHubReposApplication.navigator.replace(NomeScreen())
         GitHubReposApplication.router.replaceScreen(Screens.home())
     }
 
     override fun onResume() {
         super.onResume()
-//        val navigationContext: NavigationContext =
-//            NavigationContext.Builder(this, GitHubReposApplication.navigatorFactory)
-//                .fragmentNavigation(supportFragmentManager, R.id.fragment_main_container)
-//                .build()
-
         GitHubReposApplication.navigatorHolder.setNavigator(navigator)
     }
 
     override fun onPause() {
         super.onPause()
-//        GitHubReposApplication.navigationContextBinder.unbind(this)
         GitHubReposApplication.navigatorHolder.removeNavigator()
-    }
-
-    override fun onBackPressed() {
-//        GitHubReposApplication.navigator.goBack()
     }
 }

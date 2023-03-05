@@ -29,7 +29,6 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
     val repositoryAdapter =
         RepositoryAdapter(repositoryListener = object : RepositoryAdapter.RepositoryListener {
             override fun onItemClick(repository: Repository) {
-//                GitHubReposApplication.navigator.goForward(RepositoryDetailsScreen(repository))
                 GitHubReposApplication.router.navigateTo(Screens.repositoryDetails(repository))
             }
         })
@@ -41,15 +40,12 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
         binding!!.toolbar.setOnMenuItemClickListener(object : Toolbar.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item?.itemId == R.id.featured_authors_menu) {
-//                    GitHubReposApplication.navigator.goForward(FeaturedAuthorsScreen())
                     GitHubReposApplication.router.navigateTo(Screens.featuredAuthors())
                 }
                 if (item?.itemId == R.id.about_application_menu) {
-//                    GitHubReposApplication.navigator.goForward(AboutAppScreen())
                     GitHubReposApplication.router.navigateTo(Screens.aboutApp())
                 }
                 if (item?.itemId == R.id.settings_menu) {
-//                    GitHubReposApplication.navigator.goForward(SettingsScreen())
                     GitHubReposApplication.router.navigateTo(Screens.settings())
                 }
                 return true
