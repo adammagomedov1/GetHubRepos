@@ -15,7 +15,7 @@ class RepositoryDetails(
     val descriptionDetails: String,
 
     @SerializedName("html_url")
-    val id: String,
+    val htmlUrl: String,
 
     @SerializedName("stargazers_count")
     val gradeDetails: String,

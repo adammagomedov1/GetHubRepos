@@ -1,6 +1,5 @@
 package com.magomedov.githubrepos.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -57,14 +56,12 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
                 repositoryDetails = response.body()
                 if (repositoryDetails != null) {
 
-                    val toolbar1: Toolbar = view.findViewById(R.id.toolbar)
-                    toolbar1.setOnMenuItemClickListener(object : Toolbar.OnMenuItemClickListener {
+                    val toolbar: Toolbar = view.findViewById(R.id.toolbar)
+                    toolbar.setOnMenuItemClickListener(object : Toolbar.OnMenuItemClickListener {
                         override fun onMenuItemClick(item: MenuItem?): Boolean {
                             if (item!!.itemId == R.id.will_share) {
 
-                                val linkId: String = binding!!.linkId.text.toString()
-
-                                startIntent(linkId)
+                                startIntent()
                             }
                             return true
                         }
@@ -82,7 +79,7 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
 
                     binding!!.description.setText(repositoryDetails!!.descriptionDetails)
 
-                    binding!!.linkId.setText(repositoryDetails!!.id)
+                    binding!!.linkId.setText(repositoryDetails!!.htmlUrl)
 
                     binding!!.stargazersOunt.setText(repositoryDetails!!.gradeDetails)
 
@@ -105,13 +102,8 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
         })
     }
 
-    private fun startIntent(misage: String) {
-        val shareIntent = Intent()
-        shareIntent.action = Intent.ACTION_SEND
-        shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_TEXT, misage)
-
-        startActivity(shareIntent)
+    private fun startIntent() {
+        GitHubReposApplication.router.navigateTo(Screens.share(repositoryDetails!!.htmlUrl))
     }
 
     override fun onDestroyView() {
