@@ -5,6 +5,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
@@ -13,15 +15,15 @@ import com.magomedov.githubrepos.Screens
 import com.magomedov.githubrepos.databinding.FragmentRepositoryDetailsBinding
 import com.magomedov.githubrepos.models.Repository
 import com.magomedov.githubrepos.models.RepositoryDetails
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.magomedov.githubrepos.viewmodels.RepositoryDetailsViewModels
 import java.io.Serializable
 
 class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details) {
     private var binding: FragmentRepositoryDetailsBinding? = null
 
-    lateinit var getRepositoryDetails: Call<RepositoryDetails>
+    val viewModel : RepositoryDetailsViewModels by lazy {
+        ViewModelProvider(this).get(RepositoryDetailsViewModels::class.java)
+    }
 
     var repositoryDetails: RepositoryDetails? = null
 
@@ -42,64 +44,56 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
             }
         })
 
+        binding!!.toolbar.setOnMenuItemClickListener(object : Toolbar.OnMenuItemClickListener {
+            override fun onMenuItemClick(item: MenuItem?): Boolean {
+                if (item!!.itemId == R.id.will_share) {
+
+                    startIntent()
+                }
+                return true
+            }
+        })
+
         val repositoryId: Serializable? = requireArguments().getSerializable(ARGUMENT_DETAILS)
         val repository = repositoryId as? Repository
-        getRepositoryDetails =
-            GitHubReposApplication.gitHubService.getRepositoryDetails(repository!!.id)
 
-        getRepositoryDetails.enqueue(object : Callback<RepositoryDetails> {
+        viewModel.repositoryDetailsLiveData.observe(viewLifecycleOwner, object : Observer<RepositoryDetails>{
+            override fun onChanged(t: RepositoryDetails) {
+                repositoryDetails = t
 
-            override fun onResponse(
-                call: Call<RepositoryDetails>,
-                response: Response<RepositoryDetails>
-            ) {
-                repositoryDetails = response.body()
-                if (repositoryDetails != null) {
+                Glide.with(this@RepositoryDetailsFragment)
+                    .load(t.picture.avatar)
+                    .into(binding!!.avatar)
 
-                    val toolbar: Toolbar = view.findViewById(R.id.toolbar)
-                    toolbar.setOnMenuItemClickListener(object : Toolbar.OnMenuItemClickListener {
-                        override fun onMenuItemClick(item: MenuItem?): Boolean {
-                            if (item!!.itemId == R.id.will_share) {
+                binding!!.toolbar.setTitle(t.nameDetails)
 
-                                startIntent()
-                            }
-                            return true
-                        }
-                    })
+                binding!!.name.setText(t.nameDetails)
 
-                    Glide.with(this@RepositoryDetailsFragment)
-                        .load(repositoryDetails!!.picture.avatar)
-                        .into(binding!!.avatar)
+                binding!!.login.setText(t.picture.login)
 
-                    binding!!.toolbar.setTitle(repositoryDetails!!.nameDetails)
+                binding!!.description.setText(t.descriptionDetails)
 
-                    binding!!.name.setText(repositoryDetails!!.nameDetails)
+                binding!!.linkId.setText(t.htmlUrl)
 
-                    binding!!.login.setText(repositoryDetails!!.picture.login)
+                binding!!.stargazersOunt.setText(t.gradeDetails)
 
-                    binding!!.description.setText(repositoryDetails!!.descriptionDetails)
+                binding!!.numberOfRedirects.setText(t.repostDetails)
 
-                    binding!!.linkId.setText(repositoryDetails!!.htmlUrl)
-
-                    binding!!.stargazersOunt.setText(repositoryDetails!!.gradeDetails)
-
-                    binding!!.numberOfRedirects.setText(repositoryDetails!!.repostDetails)
-
-                    binding!!.numberOfMistakes.setText(repositoryDetails!!.mistakesDetails)
-
-                }
+                binding!!.numberOfMistakes.setText(t.mistakesDetails)
             }
+        })
 
-            override fun onFailure(call: Call<RepositoryDetails>, t: Throwable) {
-
+        viewModel.failureLiveData.observe(viewLifecycleOwner, object : Observer<String>{
+            override fun onChanged(t: String) {
                 val error: Snackbar = Snackbar.make(
                     requireView(),
-                    t.message!!,
+                    t,
                     Snackbar.LENGTH_LONG
                 )
                 error.show()
             }
         })
+        viewModel.loadRepositoryDetails(repository!!.id)
     }
 
     private fun startIntent() {
