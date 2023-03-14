@@ -1,17 +1,22 @@
 package com.magomedov.githubrepos.fragment
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.databinding.FragmentSettingsBinding
+import com.magomedov.githubrepos.viewmodels.SettingsViewModels
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private var binding: FragmentSettingsBinding? = null
+
+    val viewModel: SettingsViewModels by lazy {
+        ViewModelProvider(this).get(SettingsViewModels::class.java)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,32 +28,24 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
         })
 
-        val sharedPreferences = requireContext().getSharedPreferences(
-            "git_hub_preferences",
-            Context.MODE_PRIVATE
-        )
-
-        val repositoriesEditor: String? =
-            sharedPreferences.getString("repositories", null)
-        binding!!.settingsEditText.setText(repositoriesEditor)
+        viewModel.repositoryLiveData.observe(viewLifecycleOwner, object : Observer<String> {
+            override fun onChanged(t: String?) {
+                binding!!.settingsEditText.setText(t)
+            }
+        })
 
         binding!!.settingsButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 saveSettings()
             }
         })
+        viewModel.loadSettings()
     }
 
     private fun saveSettings() {
-        val sharedPreferences = requireContext().getSharedPreferences(
-            "git_hub_preferences",
-            Context.MODE_PRIVATE
-        )
         val repositoryList = binding!!.settingsEditText.text.toString()
 
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        editor.putString("repositories", repositoryList)
-        editor.apply()
+        viewModel.onSaveSettings(repositoryList)
 
         val snackbar = Snackbar.make(
             requireView(),
