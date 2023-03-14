@@ -5,24 +5,24 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
 import com.magomedov.githubrepos.databinding.FragmentProfileDetailsBinding
-import com.magomedov.githubrepos.models.Favorites
 import com.magomedov.githubrepos.models.ProfileDetails
 import com.magomedov.githubrepos.models.RepositoryDetails
-import com.magomedov.githubrepos.network.FavoriteDao
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.magomedov.githubrepos.viewmodels.ProfileDetailsViewModels
 
 @Suppress("UNREACHABLE_CODE")
 class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
     private var binding: FragmentProfileDetailsBinding? = null
 
-    lateinit var getRepositoryProfile: Call<ProfileDetails>
+    val viewModel: ProfileDetailsViewModels by lazy {
+        ViewModelProvider(this).get(ProfileDetailsViewModels::class.java)
+    }
 
     var repositoryProfile: ProfileDetails? = null
 
@@ -39,14 +39,7 @@ class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
         binding!!.toolbarId.setOnMenuItemClickListener(object : OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (R.id.mojombo_menu == item!!.itemId) {
-                    // Добовление в базу даных
-                    val authors = Favorites(
-                        repositoryProfile!!.login,
-                        repositoryProfile!!.avatar,
-                        repositoryProfile!!.nameProfile
-                    )
-                    val authorsDao: FavoriteDao = GitHubReposApplication.appDatabase.favoritesDao()
-                    authorsDao.insertAuthors(authors)
+                    viewModel.onMenuFavoritesClick()
 
                     val addedProfile: Snackbar = Snackbar.make(
                         view, R.string.added_to_favorites, Snackbar.LENGTH_LONG
@@ -57,54 +50,46 @@ class ProfileDetailsFragment : Fragment(R.layout.fragment_profile_details) {
             }
         })
 
-        val repositoryDetailsSerializable = requireArguments().getSerializable(ARGUMENT_PROFILE)
-        val repositoryDetails : RepositoryDetails? = repositoryDetailsSerializable as? RepositoryDetails
-        getRepositoryProfile =
-            GitHubReposApplication.gitHubService.getRepositoryProfile(repositoryDetails!!.picture.login)
-
-
-        getRepositoryProfile.enqueue(object : Callback<ProfileDetails> {
-
-            override fun onResponse(
-                call: Call<ProfileDetails>, response: Response<ProfileDetails>
-            ) {
-
-                repositoryProfile = response.body()
-                if (repositoryProfile != null) {
-
-                    binding!!.toolbarId.setTitle(repositoryProfile!!.nameProfile)
-
-                    Glide.with(this@ProfileDetailsFragment).load(repositoryProfile!!.avatar)
-                        .into(binding!!.avatar)
-
-                    binding!!.profileDescription.setText(repositoryProfile!!.description)
-
-                    binding!!.profileName.setText(repositoryProfile!!.nameProfile)
-
-                    binding!!.login.setText(repositoryProfile!!.login)
-
-                    binding!!.location.setText(repositoryProfile!!.locationProfile)
-
-                    binding!!.gmailId.setText(repositoryProfile!!.emailProfile)
-
-                    binding!!.numberOfSubscribers.setText(repositoryProfile!!.followersProfile)
-
-                    binding!!.numberOfSubscriptions.setText(repositoryProfile!!.followingProfile)
-
-                    binding!!.repositories.setText(repositoryProfile!!.publicReposProfile)
-
-                }
-
-            }
-
-            override fun onFailure(call: Call<ProfileDetails>, t: Throwable) {
-
+        viewModel.failureLiveData.observe(viewLifecycleOwner, object : Observer<String> {
+            override fun onChanged(t: String) {
                 val error: Snackbar = Snackbar.make(
-                    requireView(), t.message!!, Snackbar.LENGTH_LONG
+                    requireView(), t, Snackbar.LENGTH_LONG
                 )
                 error.show()
             }
         })
+
+        val repositoryDetailsSerializable = requireArguments().getSerializable(ARGUMENT_PROFILE)
+        val repositoryDetails: RepositoryDetails? =
+            repositoryDetailsSerializable as? RepositoryDetails
+
+        viewModel.profileDetailsLiveData.observe(viewLifecycleOwner, object : Observer<ProfileDetails>{
+            override fun onChanged(t: ProfileDetails) {
+                repositoryProfile = t
+
+                binding!!.toolbarId.setTitle(t.nameProfile)
+
+                Glide.with(this@ProfileDetailsFragment).load(t.avatar)
+                    .into(binding!!.avatar)
+
+                binding!!.profileDescription.setText(t.description)
+
+                binding!!.profileName.setText(t.nameProfile)
+
+                binding!!.login.setText(t.login)
+
+                binding!!.location.setText(t.locationProfile)
+
+                binding!!.gmailId.setText(t.emailProfile)
+
+                binding!!.numberOfSubscribers.setText(t.followersProfile)
+
+                binding!!.numberOfSubscriptions.setText(t.followingProfile)
+
+                binding!!.repositories.setText(t.publicReposProfile)
+            }
+        })
+        viewModel.loadProfileDetails(repositoryDetails!!.picture.login)
     }
 
     override fun onDestroyView() {
