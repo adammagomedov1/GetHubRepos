@@ -1,7 +1,6 @@
 package com.magomedov.githubrepos.fragment
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -9,6 +8,8 @@ import android.widget.AdapterView
 import android.widget.Spinner
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.magomedov.githubrepos.GitHubReposApplication
@@ -17,14 +18,15 @@ import com.magomedov.githubrepos.Screens
 import com.magomedov.githubrepos.adapters.RepositoryAdapter
 import com.magomedov.githubrepos.databinding.FragmentRepositoriesListBinding
 import com.magomedov.githubrepos.models.Repository
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.magomedov.githubrepos.viewmodels.RepositoryListViewModels
 
 // Экран отоброжаюший репозиториев
 class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
     private var binding: FragmentRepositoriesListBinding? = null
 
+    val viewModel: RepositoryListViewModels by lazy {
+        ViewModelProvider(this).get(RepositoryListViewModels::class.java)
+    }
 
     val repositoryAdapter =
         RepositoryAdapter(repositoryListener = object : RepositoryAdapter.RepositoryListener {
@@ -77,69 +79,99 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
-
-
         })
 
         binding!!.listRecyclerview.adapter = repositoryAdapter
 
-        loadRepositories()
-
         val decider = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding!!.listRecyclerview.addItemDecoration(decider)
-    }
 
-    private fun loadRepositories() {
-        binding!!.linkProgressbar.visibility = View.VISIBLE
-
-        val getRepository: Call<List<Repository>> =
-            GitHubReposApplication.gitHubService.getRepositoryList()
-        getRepository.enqueue(object : Callback<List<Repository>> {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onResponse(
-                call: Call<List<Repository>>,
-                response: Response<List<Repository>>
-            ) {
-                binding!!.linkProgressbar.visibility = View.GONE
-
-                val repositoryList: List<Repository> = response.body()!!
-
-                val sharedPreferences = requireContext().getSharedPreferences(
-                    "git_hub_preferences",
-                    Context.MODE_PRIVATE
-                )
-                val repositoriesEditor: String? =
-                    sharedPreferences.getString("repositories", null)
-
-                var repositoriesInt = 0
-
-                repositoriesInt = if (!repositoriesEditor.isNullOrEmpty()) {
-                    repositoriesEditor.toInt()
-                } else {
-                    repositoryList.size
+        viewModel.repositoriesLiveData.observe(viewLifecycleOwner,
+            object : Observer<List<Repository>> {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onChanged(t: List<Repository>?) {
+                    if (t != null) {
+                        repositoryAdapter.repositoryList = t.toMutableList()
+                        repositoryAdapter.notifyDataSetChanged()
+                    }
                 }
+            })
 
-                val takeList: List<Repository> = repositoryList.take(repositoriesInt)
-                repositoryAdapter.repositoryList = takeList.toMutableList()
-                repositoryAdapter.notifyDataSetChanged()
-
+        viewModel.progressBarData.observe(viewLifecycleOwner, object : Observer<Boolean> {
+            override fun onChanged(t: Boolean?) {
+                if (t == true) {
+                    binding!!.linkProgressbar.visibility = View.VISIBLE
+                } else {
+                    binding!!.linkProgressbar.visibility = View.GONE
+                }
             }
-
-            override fun onFailure(call: Call<List<Repository>>, t: Throwable) {
-                binding!!.linkProgressbar.visibility = View.GONE
-
+        })
+        viewModel.errorLiveData.observe(viewLifecycleOwner, object : Observer<Throwable> {
+            override fun onChanged(t: Throwable?) {
                 val error: Snackbar = Snackbar.make(
                     requireView(),
-                    t.message!!,
+                    t!!.message!!,
                     Snackbar.LENGTH_LONG
                 )
                 error.show()
             }
         })
+        viewModel.loadRepositories()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
+//    private fun loadRepositories() {
+//        binding!!.linkProgressbar.visibility = View.VISIBLE
+//
+//        val getRepository: Call<List<Repository>> =
+//            GitHubReposApplication.gitHubService.getRepositoryList()
+//        getRepository.enqueue(object : Callback<List<Repository>> {
+//            @SuppressLint("NotifyDataSetChanged")
+//            override fun onResponse(
+//                call: Call<List<Repository>>,
+//                response: Response<List<Repository>>
+//            ) {
+//                binding!!.linkProgressbar.visibility = View.GONE
+//
+//                val repositoryList: List<Repository> = response.body()!!
+//
+//                val sharedPreferences = requireContext().getSharedPreferences(
+//                    "git_hub_preferences",
+//                    Context.MODE_PRIVATE
+//                )
+//                val repositoriesEditor: String? =
+//                    sharedPreferences.getString("repositories", null)
+//
+//                var repositoriesInt = 0
+//
+//                repositoriesInt = if (!repositoriesEditor.isNullOrEmpty()) {
+//                    repositoriesEditor.toInt()
+//                } else {
+//                    repositoryList.size
+//                }
+//
+//                val takeList: List<Repository> = repositoryList.take(repositoriesInt)
+//                repositoryAdapter.repositoryList = takeList.toMutableList()
+//                repositoryAdapter.notifyDataSetChanged()
+//
+//            }
+//
+//            override fun onFailure(call: Call<List<Repository>>, t: Throwable) {
+//                binding!!.linkProgressbar.visibility = View.GONE
+//
+//                val error: Snackbar = Snackbar.make(
+//                    requireView(),
+//                    t.message!!,
+//                    Snackbar.LENGTH_LONG
+//                )
+//                error.show()
+//            }
+//        })
+//    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        binding = null
+//    }
+//        loadRepositories()
+
 }
