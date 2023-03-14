@@ -21,7 +21,7 @@ import java.io.Serializable
 class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details) {
     private var binding: FragmentRepositoryDetailsBinding? = null
 
-    val viewModel : RepositoryDetailsViewModels by lazy {
+    val viewModel: RepositoryDetailsViewModels by lazy {
         ViewModelProvider(this).get(RepositoryDetailsViewModels::class.java)
     }
 
@@ -33,7 +33,6 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
 
         binding!!.linearlayout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-
                 GitHubReposApplication.router.navigateTo(Screens.profile(repositoryDetails!!))
             }
         })
@@ -47,7 +46,6 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
         binding!!.toolbar.setOnMenuItemClickListener(object : Toolbar.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item!!.itemId == R.id.will_share) {
-
                     startIntent()
                 }
                 return true
@@ -57,33 +55,35 @@ class RepositoryDetailsFragment : Fragment(R.layout.fragment_repository_details)
         val repositoryId: Serializable? = requireArguments().getSerializable(ARGUMENT_DETAILS)
         val repository = repositoryId as? Repository
 
-        viewModel.repositoryDetailsLiveData.observe(viewLifecycleOwner, object : Observer<RepositoryDetails>{
-            override fun onChanged(t: RepositoryDetails) {
-                repositoryDetails = t
+        viewModel.repositoryDetailsLiveData.observe(
+            viewLifecycleOwner,
+            object : Observer<RepositoryDetails> {
+                override fun onChanged(t: RepositoryDetails) {
+                    repositoryDetails = t
 
-                Glide.with(this@RepositoryDetailsFragment)
-                    .load(t.picture.avatar)
-                    .into(binding!!.avatar)
+                    Glide.with(this@RepositoryDetailsFragment)
+                        .load(t.picture.avatar)
+                        .into(binding!!.avatar)
 
-                binding!!.toolbar.setTitle(t.nameDetails)
+                    binding!!.toolbar.setTitle(t.nameDetails)
 
-                binding!!.name.setText(t.nameDetails)
+                    binding!!.name.setText(t.nameDetails)
 
-                binding!!.login.setText(t.picture.login)
+                    binding!!.login.setText(t.picture.login)
 
-                binding!!.description.setText(t.descriptionDetails)
+                    binding!!.description.setText(t.descriptionDetails)
 
-                binding!!.linkId.setText(t.htmlUrl)
+                    binding!!.linkId.setText(t.htmlUrl)
 
-                binding!!.stargazersOunt.setText(t.gradeDetails)
+                    binding!!.stargazersOunt.setText(t.gradeDetails)
 
-                binding!!.numberOfRedirects.setText(t.repostDetails)
+                    binding!!.numberOfRedirects.setText(t.repostDetails)
 
-                binding!!.numberOfMistakes.setText(t.mistakesDetails)
-            }
-        })
+                    binding!!.numberOfMistakes.setText(t.mistakesDetails)
+                }
+            })
 
-        viewModel.failureLiveData.observe(viewLifecycleOwner, object : Observer<String>{
+        viewModel.failureLiveData.observe(viewLifecycleOwner, object : Observer<String> {
             override fun onChanged(t: String) {
                 val error: Snackbar = Snackbar.make(
                     requireView(),

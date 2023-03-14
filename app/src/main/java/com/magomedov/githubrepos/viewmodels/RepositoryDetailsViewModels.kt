@@ -16,8 +16,7 @@ class RepositoryDetailsViewModels : ViewModel() {
     val failureLiveData = MutableLiveData<String>()
 
     fun loadRepositoryDetails(repositoryId: Int) {
-        getRepositoryDetails =
-            GitHubReposApplication.gitHubService.getRepositoryDetails(repositoryId)
+        getRepositoryDetails = GitHubReposApplication.gitHubService.getRepositoryDetails(repositoryId)
 
         getRepositoryDetails.enqueue(object : Callback<RepositoryDetails> {
 
