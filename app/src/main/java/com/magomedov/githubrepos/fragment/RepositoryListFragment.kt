@@ -97,7 +97,7 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
                 }
             })
 
-        viewModel.progressBarData.observe(viewLifecycleOwner, object : Observer<Boolean> {
+        viewModel.progressBarLiveData.observe(viewLifecycleOwner, object : Observer<Boolean> {
             override fun onChanged(t: Boolean?) {
                 if (t == true) {
                     binding!!.linkProgressbar.visibility = View.VISIBLE
