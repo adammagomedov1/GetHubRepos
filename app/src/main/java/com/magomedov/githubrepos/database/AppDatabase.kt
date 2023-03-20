@@ -3,7 +3,6 @@ package com.magomedov.githubrepos.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.magomedov.githubrepos.models.Favorites
-import com.magomedov.githubrepos.network.FavoriteDao
 
 @Database(
     entities = arrayOf(Favorites::class),

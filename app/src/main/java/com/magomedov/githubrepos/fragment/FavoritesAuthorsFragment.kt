@@ -46,7 +46,6 @@ class FavoritesAuthorsFragment : Fragment(R.layout.fragment_featired_authors) {
         val dividerAuthors = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding!!.featuredAuthors.addItemDecoration(dividerAuthors)
 
-//        updateAuthorsList()
 
         val listOf = authorsAdapter.authors
 

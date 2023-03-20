@@ -12,7 +12,7 @@ class RepositoryListViewModels : ViewModel() {
     val progressBarLiveData = MutableLiveData<Boolean>()
     val errorLiveData = MutableLiveData<Throwable>()
     val repositoriesLiveData = MutableLiveData<List<Repository>>()
-    
+
     fun loadRepositories() {
         viewModelScope.launch {
             try {

@@ -1,4 +1,4 @@
-package com.magomedov.githubrepos.network
+package com.magomedov.githubrepos.database
 
 import androidx.room.*
 import com.magomedov.githubrepos.models.Favorites
@@ -7,12 +7,12 @@ import com.magomedov.githubrepos.models.Favorites
 interface FavoriteDao {
 
     @Query("select * from favorites")
-    fun getAllAuthors(): List<Favorites>
+    suspend fun getAllAuthors(): List<Favorites>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAuthors(favorite: Favorites)
+    suspend fun insertAuthors(favorite: Favorites)
 
     @Delete
-    fun deleteAuthors(favorite: Favorites)
+    suspend fun deleteAuthors(favorite: Favorites)
 
 }
