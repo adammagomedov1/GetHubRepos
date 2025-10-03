@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -14,16 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.magomedov.githubrepos.AppTheme
+import com.magomedov.githubrepos.GitHubReposApplication
 import com.magomedov.githubrepos.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AboutAppContent(
-    onBackClick: () -> Unit = {}
-) {
+fun AboutAppContent() {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         TopAppBar(
             title = {
@@ -33,7 +32,7 @@ fun AboutAppContent(
                 )
             },
             navigationIcon = {
-                IconButton(onClick = onBackClick) {
+                IconButton(onClick = { GitHubReposApplication.router.exit() }) {
                     Icon(
                         painter = painterResource(id = R.drawable.arrow_back),
                         contentDescription = null,
@@ -48,51 +47,53 @@ fun AboutAppContent(
             )
         )
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 134.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = null,
+        Scaffold { innerPadding: PaddingValues ->
+            Column(
                 modifier = Modifier
-                    .size(80.dp)
-            )
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(top = 134.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(id = R.mipmap.ic_launcher_round),
+                    contentDescription = null,
+                    modifier = Modifier.size(80.dp)
+                )
 
-            Spacer(modifier = Modifier.height(30.dp))
+                Spacer(modifier = Modifier.height(30.dp))
 
-            Text(
-                text = "GitHub Repos",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onBackground
-            )
+                Text(
+                    text = "GitHub Repos",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = colorResource(id = R.color.black) // тот же чёрный, что в XML
+                )
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = stringResource(R.string.github),
-                fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-            )
+                Text(
+                    text = stringResource(R.string.github),
+                    fontSize = 16.sp,
+                    color = Color(0xFF666666) // #666666 из XML
+                )
 
-            Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(24.dp))
 
-            Text(
-                text = stringResource(R.string.author_magomedov_adam),
-                fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-            )
+                Text(
+                    text = stringResource(R.string.author_magomedov_adam),
+                    fontSize = 16.sp,
+                    color = Color(0xFF666666)
+                )
 
-            Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
-            Text(
-                text = "2023 г.",
-                fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-            )
+                Text(
+                    text = "2023 г.",
+                    fontSize = 16.sp,
+                    color = Color(0xFF666666)
+                )
+            }
         }
     }
 }
