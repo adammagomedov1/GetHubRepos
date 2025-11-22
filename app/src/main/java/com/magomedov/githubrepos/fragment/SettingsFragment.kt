@@ -29,8 +29,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         })
 
         viewModel.repositoryLiveData.observe(viewLifecycleOwner, object : Observer<String> {
-            override fun onChanged(t: String?) {
-                binding!!.settingsEditText.setText(t)
+            override fun onChanged(value: String) {
+                binding!!.settingsEditText.setText(value)
             }
         })
 

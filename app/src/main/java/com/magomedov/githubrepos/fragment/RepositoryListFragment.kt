@@ -89,17 +89,15 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
         viewModel.repositoriesLiveData.observe(viewLifecycleOwner,
             object : Observer<List<Repository>> {
                 @SuppressLint("NotifyDataSetChanged")
-                override fun onChanged(t: List<Repository>?) {
-                    if (t != null) {
-                        repositoryAdapter.repositoryList = t.toMutableList()
-                        repositoryAdapter.notifyDataSetChanged()
-                    }
+                override fun onChanged(value: List<Repository>) {
+                    repositoryAdapter.repositoryList = value.toMutableList()
+                    repositoryAdapter.notifyDataSetChanged()
                 }
             })
 
         viewModel.progressBarLiveData.observe(viewLifecycleOwner, object : Observer<Boolean> {
-            override fun onChanged(t: Boolean?) {
-                if (t == true) {
+            override fun onChanged(value: Boolean) {
+                if (value) {
                     binding!!.linkProgressbar.visibility = View.VISIBLE
                 } else {
                     binding!!.linkProgressbar.visibility = View.GONE
@@ -107,10 +105,10 @@ class RepositoryListFragment : Fragment(R.layout.fragment_repositories_list) {
             }
         })
         viewModel.errorLiveData.observe(viewLifecycleOwner, object : Observer<Throwable> {
-            override fun onChanged(t: Throwable?) {
+            override fun onChanged(value: Throwable) {
                 val error: Snackbar = Snackbar.make(
                     requireView(),
-                    t!!.message!!,
+                    value.message!!,
                     Snackbar.LENGTH_LONG
                 )
                 error.show()
