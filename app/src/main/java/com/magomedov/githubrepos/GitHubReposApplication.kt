@@ -3,11 +3,13 @@ package com.magomedov.githubrepos
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import com.magomedov.githubrepos.database.AppDatabase
 import com.magomedov.githubrepos.network.GitHobService
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
@@ -26,9 +28,14 @@ class GitHubReposApplication : Application() {
             .allowMainThreadQueries() // разрешаем
             .build()
 
+        val client = OkHttpClient.Builder()
+            .addInterceptor(ChuckerInterceptor(context))
+            .build()
+
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.github.com/")
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
             .build()
 
         gitHubService = retrofit.create()

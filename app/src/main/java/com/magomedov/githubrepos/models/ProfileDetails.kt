@@ -15,13 +15,13 @@ class ProfileDetails(
     val nameProfile: String,
 
     @SerializedName("bio")
-    val description: String,
+    val description: String?,
 
     @SerializedName("location")
     val locationProfile: String,
 
     @SerializedName("email")
-    val emailProfile: String,
+    val emailProfile: String?,
 
     @SerializedName("followers")
     val followersProfile: String,
